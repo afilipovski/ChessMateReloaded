@@ -16,7 +16,9 @@ namespace ChessMate
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            BitBoard.Init();
+            Console.WriteLine(BitBoard.IsOccupied(16));
+            // Application.Run(new Form1());
         }
     }
 }
