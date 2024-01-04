@@ -12,6 +12,7 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -72,12 +73,14 @@
     <Compile Include="Pieces\Bishop.cs" />
     <Compile Include="Pieces\ContinuousPathPiece.cs" />
     <Compile Include="Pieces\Knight.cs" />
+    <Compile Include="Pieces\KnightBB.cs" />
     <Compile Include="Pieces\PawnBB.cs" />
     <Compile Include="Pieces\Piece.cs" />
     <Compile Include="Pieces\King.cs" />
     <Compile Include="Pieces\Queen.cs" />
     <Compile Include="Pieces\Rook.cs" />
     <Compile Include="Pieces\Pawn.cs" />
+    <Compile Include="Pieces\SlidingPieceBB.cs" />
     <Compile Include="Position.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
