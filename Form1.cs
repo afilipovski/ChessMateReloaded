@@ -12,6 +12,7 @@ namespace ChessMate
     public partial class Form1 : Form
     {
         public GameState GameState { get; set; } = new GameState();
+        public GameStateBB GameStateBB { get; set; } = new GameStateBB();
         public bool InGame { get; set; } = false;
 
         readonly AIMoveOverlay aimo = new AIMoveOverlay();
@@ -45,9 +46,9 @@ namespace ChessMate
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
-            Board.TILE_SIDE = (ClientSize.Height - Board.OFFSET_Y) / 8;
-            Board.OFFSET_X = (ClientSize.Width - 8 * Board.TILE_SIDE) / 2;
-            GameState.Draw(e.Graphics);
+             BoardDrawer.Draw(e.Graphics, ClientSize.Height, ClientSize.Width);
+            BoardDrawer.DrawBitBoard(e.Graphics, GameStateBB.Board);
+            /* GameState.Draw(e.Graphics);*/
 			if (!GameState.Board.WhiteTurn)
 			{
 				aimo.Draw(e.Graphics);

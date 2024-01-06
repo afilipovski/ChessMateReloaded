@@ -53,7 +53,9 @@
     <Compile Include="AlphaBeta\EvaluationUtils.cs" />
     <Compile Include="AlphaBeta\Opponent.cs" />
     <Compile Include="BitBoard.cs" />
+    <Compile Include="BitBoardUtils.cs" />
     <Compile Include="Board.cs" />
+    <Compile Include="BoardDrawer.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -62,6 +64,7 @@
     </Compile>
     <Compile Include="GameState.cs" />
     <Compile Include="ColoredPosition.cs" />
+    <Compile Include="GameStateBB.cs" />
     <Compile Include="Interface\AboutForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -71,15 +74,21 @@
     <Compile Include="Interface\AIMoveOverlay.cs" />
     <Compile Include="Interface\FormUtils.cs" />
     <Compile Include="Pieces\Bishop.cs" />
+    <Compile Include="Pieces\BishopBB.cs" />
     <Compile Include="Pieces\ContinuousPathPiece.cs" />
+    <Compile Include="Pieces\KingBB.cs" />
     <Compile Include="Pieces\Knight.cs" />
     <Compile Include="Pieces\KnightBB.cs" />
     <Compile Include="Pieces\PawnBB.cs" />
     <Compile Include="Pieces\Piece.cs" />
     <Compile Include="Pieces\King.cs" />
+    <Compile Include="Pieces\PieceBB.cs" />
+    <Compile Include="Pieces\PieceBBUtils.cs" />
     <Compile Include="Pieces\Queen.cs" />
+    <Compile Include="Pieces\QueenBB.cs" />
     <Compile Include="Pieces\Rook.cs" />
     <Compile Include="Pieces\Pawn.cs" />
+    <Compile Include="Pieces\RookBB.cs" />
     <Compile Include="Pieces\SlidingPieceBB.cs" />
     <Compile Include="Position.cs" />
     <Compile Include="Program.cs" />

@@ -3,16 +3,16 @@ using System.Drawing;
 
 namespace ChessMate.Pieces
 {
-    public class KnightBB : PieceBB
+    internal class KingBB : PieceBB
     {
-        public KnightBB(ulong position, bool white) : base(position, white)
+        public KingBB(ulong position, bool white) : base(position, white)
         {
         }
 
         public override Bitmap GetBitmap(Graphics g)
         {
-            return white ? Properties.Resources.w_knight_png_shadow_1024px
-                : @Properties.Resources.b_knight_png_shadow_1024px;
+            return white ? Properties.Resources.w_king_png_shadow_1024px
+                : @Properties.Resources.b_king_png_shadow_1024px;
         }
 
         public override List<BitBoard> PossibleMoves(Board b)

@@ -59,7 +59,7 @@
         {
             ulong r = (ulong)0x1 << sq;
             return (((smsk[sq].rankMaskEx & o) - 2 * r) ^ 
-                BitBoard.SwapBytes(BitBoard.SwapBytes(o) - 2 * BitBoard.SwapBytes(r)))
+                BitBoardUtils.SwapBytes(BitBoardUtils.SwapBytes(o) - 2 * BitBoardUtils.SwapBytes(r)))
                 & smsk[sq].rankMaskEx;
         }
 
@@ -74,10 +74,10 @@
         {
             ulong forward, reverse;
             forward = occupancy & mask;
-            reverse = BitBoard.SwapBytes(forward);
+            reverse = BitBoardUtils.SwapBytes(forward);
             forward -= position;
-            reverse -= BitBoard.SwapBytes(position);
-            forward ^= BitBoard.SwapBytes(reverse);
+            reverse -= BitBoardUtils.SwapBytes(position);
+            forward ^= BitBoardUtils.SwapBytes(reverse);
             forward &= mask;
             return forward;
         }
@@ -87,10 +87,10 @@
         {
             ulong forward, reverse;
             forward = occ & smsk[sq].diagonalMaskEx;
-            reverse = BitBoard.SwapBytes(forward);
+            reverse = BitBoardUtils.SwapBytes(forward);
             forward -= smsk[sq].bitMask;
-            reverse -= BitBoard.SwapBytes(smsk[sq].bitMask);
-            forward ^= BitBoard.SwapBytes(reverse);
+            reverse -= BitBoardUtils.SwapBytes(smsk[sq].bitMask);
+            forward ^= BitBoardUtils.SwapBytes(reverse);
             forward &= smsk[sq].diagonalMaskEx;
             return forward;
         }
@@ -99,10 +99,10 @@
         {
             ulong forward, reverse;
             forward = occ & smsk[sq].antidiagMaskEx;
-            reverse = BitBoard.SwapBytes(forward);
+            reverse = BitBoardUtils.SwapBytes(forward);
             forward -= smsk[sq].bitMask;
-            reverse -= BitBoard.SwapBytes(smsk[sq].bitMask);
-            forward ^= BitBoard.SwapBytes(reverse);
+            reverse -= BitBoardUtils.SwapBytes(smsk[sq].bitMask);
+            forward ^= BitBoardUtils.SwapBytes(reverse);
             forward &= smsk[sq].antidiagMaskEx;
             return forward;
         }
@@ -111,10 +111,10 @@
         {
             ulong forward, reverse;
             forward = occ & smsk[sq].fileMaskEx;
-            reverse = BitBoard.SwapBytes(forward);
+            reverse = BitBoardUtils.SwapBytes(forward);
             forward -= smsk[sq].bitMask;
-            reverse -= BitBoard.SwapBytes(smsk[sq].bitMask);
-            forward ^= BitBoard.SwapBytes(reverse);
+            reverse -= BitBoardUtils.SwapBytes(smsk[sq].bitMask);
+            forward ^= BitBoardUtils.SwapBytes(reverse);
             forward &= smsk[sq].fileMaskEx;
             return forward;
         }
