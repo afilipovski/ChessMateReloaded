@@ -1,10 +1,23 @@
-﻿using System;
+﻿using ChessMate.Pieces;
+using System;
 
 namespace ChessMate
 {
     public static class BitBoardUtils
     {
         static readonly ulong[] bitBoardSquares = new ulong[64];
+
+        // Table of indices corresponding to the LSB in a 64-bit number
+        static readonly int[] index64 = {0, 47,  1, 56, 48, 27,  2, 60,
+                            57, 49, 41, 37, 28, 16,  3, 61,
+                            54, 58, 35, 52, 50, 42, 21, 44,
+                            38, 32, 29, 23, 17, 11,  4, 62,
+                            46, 55, 26, 59, 40, 36, 15, 53,
+                            34, 51, 20, 43, 31, 22, 10, 45,
+                            25, 39, 14, 33, 19, 30,  9, 24,
+                            13, 18,  8, 12,  7,  6,  5, 63};
+        // De Bruijn constant for 64-bit
+        const ulong debruijn64 = 0x03f79d71b4cb0a89;
 
         public static void Init()
         {
@@ -15,31 +28,32 @@ namespace ChessMate
             }
         }
 
+        public static PieceBB FindPieceAtPosition(BitBoard board, ulong x)
+        {
+            if ((board.allPieces & x) == 0) return null;
+            for (int i = 0; i < 12; ++i)
+            {
+                if ((board.pieces[i].position & x) != 0) return board.pieces[i];
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Bit scan forward, transforming least significant 1 bit to index
+        /// </summary>
+        /// <param name="bb">bitboard for scan</param>
+        /// <returns>index (0..63) of least significant one bit</returns>
         public static int LS1BToSquarePosition(ulong bb)
         {
-            // Table of indices corresponding to the LSB in a 64-bit number
-            int[] index64 = {0, 47,  1, 56, 48, 27,  2, 60,
-                            57, 49, 41, 37, 28, 16,  3, 61,
-                            54, 58, 35, 52, 50, 42, 21, 44,
-                            38, 32, 29, 23, 17, 11,  4, 62,
-                            46, 55, 26, 59, 40, 36, 15, 53,
-                            34, 51, 20, 43, 31, 22, 10, 45,
-                            25, 39, 14, 33, 19, 30,  9, 24,
-                            13, 18,  8, 12,  7,  6,  5, 63};
-
-            /*
-             * bitScanForward
-             * @param bb bitboard to scan
-             * @precondition bb != 0
-             * @return index (0..63) of least significant one bit
-             */
-            // De Bruijn constant for 64-bit
-            const ulong debruijn64 = 0x03f79d71b4cb0a89;
-
             // ((bb ^ (bb-1)) * debruijn64) >> 58 calculates the index of the LSB
             return index64[((bb ^ (bb - 1)) * debruijn64) >> 58];
         }
 
+        /// <summary>
+        /// Bit scan from behind, transforming most significant 1 bit to index
+        /// </summary>
+        /// <param name="bb"></param>
+        /// <returns>index (0..63) of most significant one bit</returns>
         public static uint MS1BToSquarePostion(ulong bb)
         {
             // Smear
@@ -67,6 +81,11 @@ namespace ChessMate
         const ulong k4 = 0x0f0f0f0f0f0f0f0f; /*  -1/17  */
         const ulong kf = 0x0101010101010101; /*  -1/255 */
 
+        /// <summary>
+        /// Count number of pieces in a bitboard
+        /// </summary>
+        /// <param name="x">bitboard for the population count</param>
+        /// <returns>number of pieces</returns>
         public static int PopulationCount(ulong x)
         {
             x -= ((x >> 1) & k1); /* put count of each 2 bits into those 2 bits */

@@ -1,5 +1,6 @@
 ﻿using ChessMate.AlphaBeta;
 using ChessMate.Interface;
+using ChessMate.Pieces;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,7 +15,7 @@ namespace ChessMate
         public GameState GameState { get; set; } = new GameState();
         public GameStateBB GameStateBB { get; set; } = new GameStateBB();
         public bool InGame { get; set; } = false;
-
+        private PieceBB selectedPiece { get; set; }
         readonly AIMoveOverlay aimo = new AIMoveOverlay();
         public string SavedGamePath { get; set; } = null;
         public bool Dirty { get; set; } = false;
@@ -46,9 +47,10 @@ namespace ChessMate
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
-             BoardDrawer.Draw(e.Graphics, ClientSize.Height, ClientSize.Width);
+            BoardDrawer.DrawBoardTiles(e.Graphics, ClientSize.Height, ClientSize.Width);
             BoardDrawer.DrawBitBoard(e.Graphics, GameStateBB.Board);
-            /* GameState.Draw(e.Graphics);*/
+            if (selectedPiece != null) BoardDrawer.DrawPossibleMoves(e.Graphics, selectedPiece.position);
+
 			if (!GameState.Board.WhiteTurn)
 			{
 				aimo.Draw(e.Graphics);
@@ -68,7 +70,14 @@ namespace ChessMate
 
         private void Form1_MouseClick(object sender, MouseEventArgs e)
         {
-            Board newBoard = GameState.Board.Click(new Position(e.X, e.Y), GameState.successiveBoards);
+            int X = (e.X - BoardDrawer.OFFSET_X) / BoardDrawer.SQUARE_SIZE;
+            int Y = (e.Y - BoardDrawer.OFFSET_Y) / BoardDrawer.SQUARE_SIZE;
+
+            selectedPiece = BitBoardUtils.FindPieceAtPosition(GameStateBB.Board, (ulong)0x1 << (X + Y * 8));
+            //if (selectedPiece == null) return;
+
+
+            /*Board newBoard = GameState.Board.Click(new Position(e.X, e.Y), GameState.successiveBoards);
 
             if (!ReferenceEquals(GameState.Board, newBoard)) { 
                 Dirty = true;
@@ -106,7 +115,7 @@ namespace ChessMate
                 }
             }
 
-            GameState.SetCheckPosition();
+            GameState.SetCheckPosition();*/
 
             Refresh();
         }
