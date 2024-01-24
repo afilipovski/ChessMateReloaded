@@ -15,9 +15,11 @@ namespace ChessMate.Pieces
                 : @Properties.Resources.b_knight_png_shadow_1024px;
         }
 
-        public override List<BitBoard> PossibleMoves(Board b)
+        public override List<BitBoard> PossibleMoves(BitBoard bb)
         {
-            throw new System.NotImplementedException();
+            int square = BitBoardUtils.LS1BToSquarePosition(position);
+            ulong moves = PieceBBUtils.kingMoves[square];
+            return moves;
         }
     }
 }

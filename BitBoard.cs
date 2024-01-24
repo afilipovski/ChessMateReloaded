@@ -14,6 +14,11 @@ namespace ChessMate
         public ulong allBlackPieces = 0x000000000000FFFF;
         public ulong allWhitePieces = 0xFFFF000000000000;
 
+        public BitBoard(BitBoard bb)
+        {
+            pieces = bb.pieces;
+        }
+
         public BitBoard() {
             pieces = new PieceBB[]{
                 new PawnBB(0x000000000000FF00, false),
@@ -30,6 +35,17 @@ namespace ChessMate
                 new KingBB(0x1000000000000000, true),
                 new QueenBB(0x0800000000000000, true)
             };
+        }
+
+        public List<BitBoard> GetPossibleMoves()
+        {
+            List<BitBoard> possibleMoves = new List<BitBoard>();
+            foreach(PieceBB pieceBB in pieces)
+            {
+                ulong positions = pieceBB.PossibleMoves();
+
+            }
+            return possibleMoves;
         }
 
         public ulong UpdateAllPieces(ulong oldPos, ulong newPiece)

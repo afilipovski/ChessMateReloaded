@@ -18,7 +18,7 @@ namespace ChessMate.Pieces
             this.white = white;
         }
 
-        public abstract List<BitBoard> PossibleMoves(Board b);
+        public abstract List<BitBoard> PossibleMoves(BitBoard bb);
 
         public abstract Bitmap GetBitmap(Graphics g);
 
