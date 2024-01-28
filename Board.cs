@@ -11,7 +11,7 @@ using System.Text;
 namespace ChessMate
 {
     [Serializable]
-    public class Board
+    public class Board : ITransposable
     {
         public Dictionary<Position, Piece> PieceByPosition { get; set; }
         public bool WhiteTurn { get; set; } = true;
@@ -249,15 +249,15 @@ namespace ChessMate
 			throw new NotImplementedException();
 		}
 
-        public int Hash(Board obj)
+        public long Hash()
         {
-            int hash = 0;
+            long hash = 0;
 
             for (int i = 0; i < 8; i++)
             {
                 for (int j = 0; j < 8; j++)
                 {
-                    int toadd = 0;
+                    long toadd = 0;
                     Position p = new Position(i, j);
                     if (PieceByPosition[p] != null)
                     {
@@ -273,6 +273,11 @@ namespace ChessMate
 		public int GetHashCode(Board obj)
 		{
 			throw new NotImplementedException();
+		}
+
+		public int Evaluation()
+		{
+			return EvaluationUtils.EvaluateBoard(this);
 		}
 	}
 }

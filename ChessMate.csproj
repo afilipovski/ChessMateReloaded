@@ -93,6 +93,8 @@
     <Compile Include="Position.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Transposition\ITransposable.cs" />
+    <Compile Include="Transposition\TranspositionTable.cs" />
     <Compile Include="Transposition\ZobristUtils.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

@@ -52,7 +52,7 @@ namespace ChessMate.Pieces
 
         abstract public Piece Clone();
 
-		public int Hash(Piece obj)
+		public long Hash(Piece obj)
 		{
 			return obj.GetType().GetHashCode() << 1 ^ obj.White.GetHashCode() >> 31;
 		}
