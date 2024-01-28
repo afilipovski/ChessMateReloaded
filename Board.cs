@@ -1,5 +1,6 @@
 ﻿using ChessMate.AlphaBeta;
 using ChessMate.Pieces;
+using ChessMate.Transposition;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -150,7 +151,7 @@ namespace ChessMate
 
         public Board Click(Position p, List<Board> successiveStates)
         {
-            Position clickedPosition = new Position((p.X - OFFSET_X) / TILE_SIDE, (p.Y - OFFSET_Y) / TILE_SIDE);
+			Position clickedPosition = new Position((p.X - OFFSET_X) / TILE_SIDE, (p.Y - OFFSET_Y) / TILE_SIDE);
             if (!WhiteTurn || !IsInBoard(clickedPosition))
                 return this;
 
@@ -182,6 +183,7 @@ namespace ChessMate
                     .Where(board => !board.KingIsInCheck(true)).ToList()
                     .ForEach(board => { successiveStates.Add(board); });
             }
+
 
             return this;
 
@@ -242,5 +244,35 @@ namespace ChessMate
             return Successor().Count == 0;
         }
 
-    }
+		public bool Equals(Board x, Board y)
+		{
+			throw new NotImplementedException();
+		}
+
+        public int Hash(Board obj)
+        {
+            int hash = 0;
+
+            for (int i = 0; i < 8; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    int toadd = 0;
+                    Position p = new Position(i, j);
+                    if (PieceByPosition[p] != null)
+                    {
+                        toadd = PieceByPosition[p].Hash(PieceByPosition[p]);
+                    }
+                    hash = (hash * 12 + toadd) % ZobristUtils.NUM_ENTRIES;
+                }
+            }
+
+            return hash;
+        }
+
+		public int GetHashCode(Board obj)
+		{
+			throw new NotImplementedException();
+		}
+	}
 }
