@@ -15,9 +15,21 @@ namespace ChessMate.AlphaBeta
     {
         public const int INFTY = 10000;
 
+		static readonly int[,] centeredArray = new int[,]
+        {
+			{ 1, 5, 1, 1, 1, 1, 5, 1 },
+	        { 1, 2, 2, 2, 2, 2, 2, 1 },
+	        { 1, 2, 3, 3, 3, 3, 2, 1 },
+	        { 1, 2, 3, 4, 4, 3, 2, 1 },
+	        { 1, 2, 3, 4, 4, 3, 2, 1 },
+	        { 1, 2, 3, 3, 3, 3, 2, 1 },
+	        { 1, 2, 2, 2, 2, 2, 2, 1 },
+	        { 1, 5, 1, 1, 1, 1, 5, 1 }
+		};
 
-        //high value favors white
-        public static int EvaluateBoard(Board board)
+
+		//high value favors white
+		public static int EvaluateBoard(Board board)
         {
             int value = 0;
             board.PieceByPosition.Values.ToList().ForEach(piece =>
@@ -33,6 +45,8 @@ namespace ChessMate.AlphaBeta
                 else if (piece is Rook) local = 50;
                 else if (piece is Knight) local = 30;
                 else local = 10;
+
+                local += (int)(centeredArray[piece.Position.X,piece.Position.Y] * board.TurnNumber/10.0);
 
                 value += piece.White ? local : -local;
             });
