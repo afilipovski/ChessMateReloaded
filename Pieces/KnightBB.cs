@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace ChessMate.Pieces
@@ -17,9 +18,10 @@ namespace ChessMate.Pieces
 
         public override List<BitBoard> PossibleMoves(BitBoard bb)
         {
-            int square = BitBoardUtils.LS1BToSquarePosition(position);
-            ulong moves = PieceBBUtils.kingMoves[square];
-            return moves;
+            throw new NotImplementedException();
+//            int square = BitBoardUtils.LS1BToSquarePosition(position);
+//            ulong moves = PieceBBUtils.kingMoves[square];
+//            return moves;
         }
     }
 }

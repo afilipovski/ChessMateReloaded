@@ -1,6 +1,7 @@
 ﻿using ChessMate.Pieces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ChessMate
 {
@@ -42,7 +43,7 @@ namespace ChessMate
             List<BitBoard> possibleMoves = new List<BitBoard>();
             foreach(PieceBB pieceBB in pieces)
             {
-                ulong positions = pieceBB.PossibleMoves();
+                possibleMoves = possibleMoves.Union(pieceBB.PossibleMoves(this)).ToList();
 
             }
             return possibleMoves;

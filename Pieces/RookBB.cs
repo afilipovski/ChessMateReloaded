@@ -19,7 +19,7 @@ namespace ChessMate.Pieces
                 : @Properties.Resources.b_rook_png_shadow_1024px;
         }
 
-        public override List<BitBoard> PossibleMoves(Board b)
+        public override List<BitBoard> PossibleMoves(BitBoard b)
         {
             throw new NotImplementedException();
         }
