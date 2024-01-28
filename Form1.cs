@@ -112,7 +112,7 @@ namespace ChessMate
             //AI MOVE
             if (GameState.Board.WhiteTurn == false)
             {
-                Board aiMove = GameState.o.Move(GameState.Board);
+                Board aiMove = GameState.o.IterativeDeepeningSearch(GameState.Board, TimeSpan.FromSeconds(10));
 
                 if (aiMove != null)
                 {

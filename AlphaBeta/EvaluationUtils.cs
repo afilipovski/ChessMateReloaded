@@ -1,9 +1,12 @@
 ﻿using ChessMate.Pieces;
+using ChessMate.Transposition;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ChessMate.AlphaBeta
@@ -46,7 +49,7 @@ namespace ChessMate.AlphaBeta
             List<Board> children = node.Successor();
 
             if (depth == 0 || children.Count == 0)
-                return EvaluateBoard(node);
+                return TranspositionTable<Board>.Evaluate(node);
             if (maximisingPlayer)
             {
                 int value = -INFTY;

@@ -1,7 +1,10 @@
 ﻿using ChessMate.Pieces;
+using ChessMate.Transposition;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -38,23 +41,43 @@ namespace ChessMate.AlphaBeta
                 this.value = value;
             }
         }
-        public Board Move(Board board)
+
+        public Board BestMovePly(Board board, int ply)
         {
-            List<Node> nodes = new List<Node>();
-            int pivot_value = board.WhiteTurn ? -EvaluationUtils.INFTY : EvaluationUtils.INFTY;
-            foreach (Board move in board.Successor()) {
-                int value = EvaluationUtils.AlphabetaInit(move, (int)Difficulty, board.WhiteTurn);
-                pivot_value = board.WhiteTurn ? Math.Max(pivot_value, value) : Math.Min(pivot_value,value);
-                nodes.Add(new Node(move, value));
-            }
-            List<Node> eligibleMoves = nodes.FindAll(n => n.value == pivot_value);
-            if (eligibleMoves.Count > 0)
+			List<Node> nodes = new List<Node>();
+			int pivot_value = board.WhiteTurn ? -EvaluationUtils.INFTY : EvaluationUtils.INFTY;
+			foreach (Board move in board.Successor())
+			{
+				int value = EvaluationUtils.AlphabetaInit(move, ply, board.WhiteTurn);
+				pivot_value = board.WhiteTurn ? Math.Max(pivot_value, value) : Math.Min(pivot_value, value);
+				nodes.Add(new Node(move, value));
+			}
+			List<Node> eligibleMoves = nodes.FindAll(n => n.value == pivot_value);
+			if (eligibleMoves.Count > 0)
+			{
+				Board next = eligibleMoves[r.Next(eligibleMoves.Count)].board;
+				Position newPos = next.NewPos;
+				return next;
+			}
+			return null; //returns null if there are no possible moves.
+		}
+
+		public Board FixedDepthMove(Board board)
+		{
+			return BestMovePly(board, (int)Difficulty);
+		}
+
+		public Board IterativeDeepeningSearch(Board root, TimeSpan timeSpan)
+        {
+            Board best = null;
+
+            Stopwatch stopwatch = Stopwatch.StartNew();
+            for (int i = 0; stopwatch.Elapsed < timeSpan && i <= (int)OpponentDifficulty.MEDIUM; i++)
             {
-                Board next = eligibleMoves[r.Next(eligibleMoves.Count)].board;
-                Position newPos = next.NewPos;
-                return next;
+                best = BestMovePly(root, i);
             }
-            return null; //returns null if there are no possible moves.
+
+            return best;
         }
     }
 }

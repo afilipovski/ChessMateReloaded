@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace ChessMate.Transposition
 {
-	public class TranspositionTable<T> where T : ITransposable
+	public static class TranspositionTable<T> where T : ITransposable
 	{
-		public Dictionary<long, int> Table { get; set; } = new Dictionary<long, int>();
+		public static Dictionary<long, int> Table { get; set; } = new Dictionary<long, int>();
 
-		int Hits { get; set; } = 0;
-		int Total { get; set; } = 0;
+		static int Hits { get; set; } = 0;
+		static int Total { get; set; } = 0;
 
-		public int Evaluate(T board)
+		public static int Evaluate(T board)
 		{
 			long hash = board.Hash();
 			Total++;

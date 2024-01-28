@@ -200,7 +200,7 @@ namespace ChessMate
                 sb.AppendLine($"{position}: {PieceByPosition[position]}");
             }
             sb.AppendLine("New pos: " + NewPos);
-            sb.AppendLine("Evaluation: " + EvaluationUtils.EvaluateBoard(this));
+            sb.AppendLine("Evaluation: " + TranspositionTable<Board>.Evaluate(this));
 
             return sb.ToString();
         }
