@@ -112,7 +112,11 @@ namespace ChessMate
             //AI MOVE
             if (GameState.Board.WhiteTurn == false)
             {
-                Board aiMove = GameState.o.IterativeDeepeningSearch(GameState.Board, TimeSpan.FromSeconds(10));
+                Board aiMove;
+                if (GameState.o.Difficulty == OpponentDifficulty.ITERATIVE_DEEPENING)
+                    aiMove = GameState.o.IterativeDeepeningSearch(GameState.Board, TimeSpan.FromSeconds(10));
+                else
+                    aiMove = GameState.o.FixedDepthMove(GameState.Board);
 
                 if (aiMove != null)
                 {
@@ -268,15 +272,28 @@ namespace ChessMate
             Checkmarks();
 		}
 
-        private void Checkmarks()
+		private void iterativeDeepeningToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+            GameState.o.Difficulty = OpponentDifficulty.ITERATIVE_DEEPENING;
+            Checkmarks();
+		}
+
+		private void Checkmarks()
         {
-            easyToolStripMenuItem.Checked = mediumToolStripMenuItem.Checked = hardToolStripMenuItem.Checked = false;
+            easyToolStripMenuItem.Checked =
+                mediumToolStripMenuItem.Checked =
+                hardToolStripMenuItem.Checked =
+                iterativeDeepeningToolStripMenuItem.Checked = false;
+
             switch (GameState.o.Difficulty)
             {
                 case OpponentDifficulty.EASY: easyToolStripMenuItem.Checked = true; break;
                 case OpponentDifficulty.MEDIUM: mediumToolStripMenuItem.Checked = true; break;
                 case OpponentDifficulty.HARD: hardToolStripMenuItem.Checked = true; break;
+                case OpponentDifficulty.ITERATIVE_DEEPENING: iterativeDeepeningToolStripMenuItem.Checked = true; break;
             }
         }
+
+		
 	}
 }

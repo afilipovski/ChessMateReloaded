@@ -15,7 +15,8 @@ namespace ChessMate.AlphaBeta
     {
         EASY = 0,
         MEDIUM = 1,
-        HARD = 2
+        HARD = 2,
+        ITERATIVE_DEEPENING = 3
     }
 
     [Serializable]
